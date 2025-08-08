@@ -1,0 +1,6 @@
+{
+  "name": "DarkBERT Fine-Tuning & Chat",
+  "description": "An application to prepare data for fine-tuning the DarkBERT model and interact with it through a chat interface. It simulates the data preparation and fine-tuning process using the Gemini API.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}

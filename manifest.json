@@ -1,0 +1,23 @@
+{
+  "name": "AI Tool Suite",
+  "short_name": "AI Tools",
+  "description": "A versatile suite of AI-powered tools using the Gemini API for various creative and technical tasks.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#1f2937",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
