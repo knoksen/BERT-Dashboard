@@ -261,9 +261,8 @@ const App: React.FC = () => {
 
 export default App;
 
-// Mobile quick launch bar (only visible on small screens) placed after export for file ordering clarity
-const QuickLaunchBar: React.FC<{ currentMode: AppMode; onSelect: (m: AppMode) => void; }> = ({ currentMode, onSelect }) => {
-    // Hide entirely on larger screens via Tailwind (sm:hidden already hides <640px? Actually sm: applies ≥640 so use md:hidden to show on mobile). We'll show on mobile only.
+// Mobile quick launch bar (function declarations are hoisted, preventing ReferenceError before initialization)
+function QuickLaunchBar({ currentMode, onSelect }: { currentMode: AppMode; onSelect: (m: AppMode) => void }) {
     return (
         <nav
             aria-label="Quick launch"
@@ -290,17 +289,19 @@ const QuickLaunchBar: React.FC<{ currentMode: AppMode; onSelect: (m: AppMode) =>
             />
         </nav>
     );
-};
+}
 
-const QuickLaunchButton: React.FC<{ label: string; icon: React.ReactNode; active: boolean; onClick: () => void; }> = ({ label, icon, active, onClick }) => (
-    <button
-        type="button"
-        onClick={onClick}
-        aria-label={label}
-        className={`flex flex-col items-center gap-0.5 px-4 py-1 rounded-lg text-xs font-medium transition-colors ${active ? 'text-accent' : 'text-dark-text-secondary hover:text-white'}`}
-        data-testid={`quick-launch-${label.toLowerCase()}`}
-    >
-        {icon}
-        <span>{label}</span>
-    </button>
-);
+function QuickLaunchButton({ label, icon, active, onClick }: { label: string; icon: React.ReactNode; active: boolean; onClick: () => void }) {
+    return (
+        <button
+            type="button"
+            onClick={onClick}
+            aria-label={label}
+            className={`flex flex-col items-center gap-0.5 px-4 py-1 rounded-lg text-xs font-medium transition-colors ${active ? 'text-accent' : 'text-dark-text-secondary hover:text-white'}`}
+            data-testid={`quick-launch-${label.toLowerCase()}`}
+        >
+            {icon}
+            <span>{label}</span>
+        </button>
+    );
+}
