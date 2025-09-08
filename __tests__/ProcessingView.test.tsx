@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi, describe, it, expect } from 'vitest';
 import ProcessingView from '../components/shared/ProcessingView';
@@ -11,7 +11,7 @@ const StubIcon: React.FC<{ className?: string }> = ({ className }) => <svg data-
 
 describe('ProcessingView (timed progression)', () => {
   it('iterates through all steps and calls onComplete', async () => {
-    vi.useFakeTimers();
+  // Use real timers with a very small interval override
     const onComplete = vi.fn();
 
     render(
@@ -23,24 +23,20 @@ describe('ProcessingView (timed progression)', () => {
         startButtonText="Start"
         processingButtonText="Working..."
         completeButtonText="Done"
-        onComplete={onComplete}
+  onComplete={onComplete}
+  intervalMs={1}
       />
     );
 
     // Initial state
     expect(screen.getByText(/Ready to begin\./i)).toBeInTheDocument();
-    await userEvent.click(screen.getByRole('button', { name: /Start/i }));
+  await userEvent.click(screen.getByRole('button', { name: /Start/i }));
 
-    // Advance all steps
-    await act(async () => {
-      vi.advanceTimersByTime(1200 * (FINE_TUNING_STEPS.length + 1));
-    });
-    // Final status message appears
-    await screen.findByText(/Fine-tuning successful!/i);
+  // Wait for final status message; poll quickly
+  await screen.findByText(/Fine-tuning successful!/i, {}, { timeout: 200 });
     const doneBtn = await screen.findByRole('button', { name: /Done/i });
   await userEvent.click(doneBtn);
     expect(onComplete).toHaveBeenCalledTimes(1);
 
-    vi.useRealTimers();
   });
 });

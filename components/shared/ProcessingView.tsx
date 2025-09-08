@@ -12,6 +12,7 @@ interface ProcessingViewProps {
   processingButtonText: string;
   completeButtonText: string;
   autoStart?: boolean;
+  intervalMs?: number; // optional override for testing speed
 }
 
 const ProcessingView: React.FC<ProcessingViewProps> = ({ 
@@ -23,7 +24,8 @@ const ProcessingView: React.FC<ProcessingViewProps> = ({
     startButtonText,
     processingButtonText,
     completeButtonText,
-    autoStart = false
+  autoStart = false,
+  intervalMs = 1200
 }) => {
   const [progress, setProgress] = useState(0);
   const [statusMessage, setStatusMessage] = useState('Ready to begin.');
@@ -34,7 +36,7 @@ const ProcessingView: React.FC<ProcessingViewProps> = ({
     let interval: NodeJS.Timeout;
     if (isProcessing && !isComplete) {
       let stepIndex = 0;
-      interval = setInterval(() => {
+    interval = setInterval(() => {
         if (stepIndex < processingSteps.length) {
           const currentStep = processingSteps[stepIndex];
           setProgress(currentStep.progress);
@@ -45,10 +47,10 @@ const ProcessingView: React.FC<ProcessingViewProps> = ({
           }
           stepIndex++;
         }
-      }, 1200);
+    }, intervalMs);
     }
     return () => clearInterval(interval);
-  }, [isProcessing, isComplete, processingSteps]);
+  }, [isProcessing, isComplete, processingSteps, intervalMs]);
 
   const IconComponent = Icon || (() => null);
 
