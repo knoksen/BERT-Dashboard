@@ -6,6 +6,7 @@ Production-ready React + Vite PWA that bundles multiple AI assistant workflows u
 ![Deploy](https://img.shields.io/github/actions/workflow/status/knoksen/BERT-Dashboard/deploy-pages.yml?branch=main&label=Pages%20Deploy)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)
+![Coverage](https://img.shields.io/badge/coverage-local--run-informational)
 
 ## Features
 
@@ -36,6 +37,9 @@ Preview production build locally:
 
 Run tests:
    npm test
+
+Run tests with coverage:
+   npm run test:coverage
 
 Run lint:
    npm run lint
