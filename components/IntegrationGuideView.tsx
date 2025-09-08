@@ -5,7 +5,7 @@ import { createFinanceBertChatSession } from '../services/geminiService';
 import { PaymentGatewayConfig } from '../types';
 import { ChatBubbleIcon, SendIcon, CheckIcon, CopyIcon, TerminalIcon, CreditCardIcon } from './shared/IconComponents';
 import LoadingSpinner from './shared/LoadingSpinner';
-import { useChat } from '../../hooks/useChat';
+import { useChat } from '../hooks/useChat';
 
 const CodeBlock: React.FC<{ title: string; language: string; code: string }> = ({ title, language, code }) => {
     const [copied, setCopied] = React.useState(false);

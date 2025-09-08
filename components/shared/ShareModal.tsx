@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import QRCode from 'qrcode.react';
+import QRCode from 'react-qr-code';
 import { CopyIcon, CheckIcon } from './IconComponents';
 
 interface ShareModalProps {
@@ -36,7 +36,7 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose }) => {
             Scan the QR code with your mobile device to open this app.
           </p>
           <div className="bg-white p-4 inline-block rounded-lg border-4 border-accent">
-            <QRCode value={url} size={256} level="H" />
+            <QRCode value={url} size={180} bgColor="#ffffff" fgColor="#000000" />
           </div>
           <div className="mt-6">
             <p className="text-dark-text-secondary text-sm mb-2">Or copy the link</p>

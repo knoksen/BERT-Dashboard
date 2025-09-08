@@ -5,7 +5,7 @@ import { createLaBertChatSession } from '../services/geminiService';
 import { CaseBrief } from '../types';
 import { ChatBubbleIcon, SendIcon, ScaleIcon } from './shared/IconComponents';
 import LoadingSpinner from './shared/LoadingSpinner';
-import { useChat } from '../../hooks/useChat';
+import { useChat } from '../hooks/useChat';
 
 interface LegalQaViewProps {
   caseBrief: CaseBrief;

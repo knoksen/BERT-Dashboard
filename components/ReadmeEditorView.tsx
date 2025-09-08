@@ -5,7 +5,7 @@ import { createGitBertChatSession } from '../services/geminiService';
 import { ReadmeContent } from '../types';
 import { ChatBubbleIcon, SendIcon, GithubIcon } from './shared/IconComponents';
 import LoadingSpinner from './shared/LoadingSpinner';
-import { useChat } from '../../hooks/useChat';
+import { useChat } from '../hooks/useChat';
 
 const formatReadme = (content: ReadmeContent): string => {
     return `# ${content.projectName}

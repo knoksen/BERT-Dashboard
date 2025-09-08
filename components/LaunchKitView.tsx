@@ -5,7 +5,7 @@ import { createLaunchBertChatSession } from '../services/geminiService';
 import { LaunchAssets } from '../types';
 import { ChatBubbleIcon, SendIcon, MegaphoneIcon, CheckIcon, CopyIcon } from './shared/IconComponents';
 import LoadingSpinner from './shared/LoadingSpinner';
-import { useChat } from '../../hooks/useChat';
+import { useChat } from '../hooks/useChat';
 
 const AssetBlock: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
     const [copied, setCopied] = useState(false);

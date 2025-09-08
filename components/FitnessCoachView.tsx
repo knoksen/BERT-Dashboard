@@ -5,7 +5,7 @@ import { createFitBertChatSession } from '../services/geminiService';
 import { WorkoutPlan } from '../types';
 import { ChatBubbleIcon, SendIcon, DumbbellIcon } from './shared/IconComponents';
 import LoadingSpinner from './shared/LoadingSpinner';
-import { useChat } from '../../hooks/useChat';
+import { useChat } from '../hooks/useChat';
 
 interface FitnessCoachViewProps {
   workoutPlan: WorkoutPlan;

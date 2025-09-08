@@ -5,7 +5,7 @@ import { createContractBertChatSession } from '../services/geminiService';
 import { ContractAnalysis } from '../types';
 import { ChatBubbleIcon, SendIcon, FileCheckIcon } from './shared/IconComponents';
 import LoadingSpinner from './shared/LoadingSpinner';
-import { useChat } from '../../hooks/useChat';
+import { useChat } from '../hooks/useChat';
 
 interface ContractQaViewProps {
   contractAnalysis: ContractAnalysis;

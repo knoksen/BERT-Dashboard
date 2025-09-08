@@ -6,7 +6,7 @@ import { createBartholomewChatSession } from '../services/geminiService';
 import { ChatMessage, ResearchBrief } from '../types';
 import { ChatBubbleIcon, SendIcon, BookOpenIcon } from './shared/IconComponents';
 import LoadingSpinner from './shared/LoadingSpinner';
-import { useChat } from '../../hooks/useChat';
+import { useChat } from '../hooks/useChat';
 
 interface HistoricalInquiryViewProps {
   researchBrief: ResearchBrief;

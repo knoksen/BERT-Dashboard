@@ -1,13 +1,16 @@
-
-
-// Add your instrumentation key or use the APPLICATIONINSIGHTSKEY environment variable on your production machine to start collecting data.
-var ai = require('applicationinsights');
-ai.setup(process.env.APPLICATIONINSIGHTSKEY || 'your_instrumentation_key').start();<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DarkBERT Fine-Tuning & Chat</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="application-name" content="AI Tools" />
+  <meta name="apple-mobile-web-app-title" content="AI Tools" />
+  <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
     
     <!-- PWA Manifest & Theme -->
     <link rel="manifest" href="manifest.json" />

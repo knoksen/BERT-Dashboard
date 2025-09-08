@@ -1,0 +1,6 @@
+/* Minimal global stylesheet */
+html, body, #root { height:100%; }
+body { margin:0; font-family: system-ui, Arial, sans-serif; }
+/* Utility to hide scrollbars on custom containers if needed */
+.hide-scrollbar { scrollbar-width: none; }
+.hide-scrollbar::-webkit-scrollbar { display:none; }

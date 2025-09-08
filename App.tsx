@@ -1,29 +1,30 @@
 
 
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import { AppMode } from './types';
-import DarkbertStudio from './components/DarkbertStudio';
-import ArtistScamDetectorView from './components/ArtistScamDetectorView';
-import ModeSelectionView from './components/ModeSelectionView';
-import StorybertStudio from './components/StorybertStudio';
-import CarbertGarage from './components/CarbertGarage';
-import AnniBertPlanner from './components/AnniBertPlanner';
-import BartholomewLibrary from './components/BartholomewLibrary';
-import LaBertAssistant from './components/LaBertAssistant';
-import LiveBertProducer from './components/LiveBertProducer';
-import RoBertaStudio from './components/RoBertaStudio';
-import RoBertoKitchen from './components/RoBertoKitchen';
-import FitbertStudio from './components/FitbertStudio';
-import DocuBertAnalyzer from './components/DocuBertAnalyzer';
-import TravelBertPlanner from './components/TravelBertPlanner';
-import FinanceBertGateway from './components/FinanceBertGateway';
-import QuestBertGenerator from './components/QuestBertGenerator';
-import DreamBertAnalyzer from './components/DreamBertAnalyzer';
-import ContractBertAnalyzer from './components/ContractBertAnalyzer';
-import GitBertPreviewer from './components/GitBertPreviewer';
-import LaunchBertLauncher from './components/LaunchBertLauncher';
-import ArtisanBertStudio from './components/ArtisanBertStudio';
-import NewsBertAnalyzer from './components/NewsBertAnalyzer';
+// Lazy-loaded feature modules for code splitting
+const DarkbertStudio = lazy(() => import('./components/DarkbertStudio'));
+const ArtistScamDetectorView = lazy(() => import('./components/ArtistScamDetectorView'));
+const ModeSelectionView = lazy(() => import('./components/ModeSelectionView'));
+const StorybertStudio = lazy(() => import('./components/StorybertStudio'));
+const CarbertGarage = lazy(() => import('./components/CarbertGarage'));
+const AnniBertPlanner = lazy(() => import('./components/AnniBertPlanner'));
+const BartholomewLibrary = lazy(() => import('./components/BartholomewLibrary'));
+const LaBertAssistant = lazy(() => import('./components/LaBertAssistant'));
+const LiveBertProducer = lazy(() => import('./components/LiveBertProducer'));
+const RoBertaStudio = lazy(() => import('./components/RoBertaStudio'));
+const RoBertoKitchen = lazy(() => import('./components/RoBertoKitchen'));
+const FitbertStudio = lazy(() => import('./components/FitbertStudio'));
+const DocuBertAnalyzer = lazy(() => import('./components/DocuBertAnalyzer'));
+const TravelBertPlanner = lazy(() => import('./components/TravelBertPlanner'));
+const FinanceBertGateway = lazy(() => import('./components/FinanceBertGateway'));
+const QuestBertGenerator = lazy(() => import('./components/QuestBertGenerator'));
+const DreamBertAnalyzer = lazy(() => import('./components/DreamBertAnalyzer'));
+const ContractBertAnalyzer = lazy(() => import('./components/ContractBertAnalyzer'));
+const GitBertPreviewer = lazy(() => import('./components/GitBertPreviewer'));
+const LaunchBertLauncher = lazy(() => import('./components/LaunchBertLauncher'));
+const ArtisanBertStudio = lazy(() => import('./components/ArtisanBertStudio'));
+const NewsBertAnalyzer = lazy(() => import('./components/NewsBertAnalyzer'));
 import { CreditProvider, useCredits } from './contexts/CreditContext';
 import { ArrowLeftIcon, CoinsIcon, PlusIcon, ShareIcon } from './components/shared/IconComponents';
 import InstallPWA from './components/shared/InstallPWA';
@@ -201,7 +202,9 @@ const AppContent: React.FC = () => {
         <div className="min-h-screen font-sans flex flex-col">
             <Header mode={mode} onBack={handleBack} onShare={() => setIsShareModalOpen(true)} />
             <main className="flex-grow flex flex-col items-center justify-start w-full animate-fade-in-content">
-                {renderMode()}
+                <Suspense fallback={<div className="p-8 text-dark-text-secondary">Loading module...</div>}>
+                    {renderMode()}
+                </Suspense>
             </main>
             {isShareModalOpen && <ShareModal isOpen={isShareModalOpen} onClose={() => setIsShareModalOpen(false)} />}
         </div>

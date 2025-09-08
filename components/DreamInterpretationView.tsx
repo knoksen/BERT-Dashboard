@@ -5,7 +5,7 @@ import { createDreamBertChatSession } from '../services/geminiService';
 import { DreamInterpretation } from '../types';
 import { ChatBubbleIcon, SendIcon, MoonIcon } from './shared/IconComponents';
 import LoadingSpinner from './shared/LoadingSpinner';
-import { useChat } from '../../hooks/useChat';
+import { useChat } from '../hooks/useChat';
 
 interface DreamInterpretationViewProps {
   dreamInterpretation: DreamInterpretation;
