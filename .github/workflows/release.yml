@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-test-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install deps
+        run: npm ci || npm install --legacy-peer-deps
+      - name: Lint
+        run: npm run lint
+      - name: Type Check
+        run: npx tsc --noEmit
+      - name: Test
+        run: npm run test -- --reporter=default
+      - name: Coverage
+        run: npm run test:coverage -- --reporter=default || true
+      - name: Build
+        run: npm run build
+      - name: Zip dist
+        run: zip -r dist.zip dist
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist.zip
+            coverage/coverage-summary.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

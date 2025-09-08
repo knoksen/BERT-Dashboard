@@ -8,6 +8,12 @@ export default defineConfig({
     setupFiles: './vitest.setup.ts',
     globals: true,
     css: false,
+    poolOptions: {
+      threads: {
+        maxThreads: 1,
+        minThreads: 1
+      }
+    },
     coverage: {
       provider: 'v8',
       reportsDirectory: 'coverage',
@@ -21,10 +27,11 @@ export default defineConfig({
         '**/constants.ts' // pure data lists; exclude from threshold pressure
       ],
       thresholds: {
-        lines: 15,
-        statements: 15,
-        functions: 15,
-        branches: 10
+  // Incrementally raised thresholds (was 15/15/15/10)
+  lines: 18,
+  statements: 18,
+  functions: 20,
+  branches: 12
       }
     }
   }

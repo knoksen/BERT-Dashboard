@@ -2,10 +2,13 @@
   "name": "AI Tool Suite",
   "short_name": "AI Tools",
   "description": "A versatile suite of AI-powered tools using the Gemini API for various creative and technical tasks.",
-  "start_url": ".",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "fullscreen", "minimal-ui"],
   "background_color": "#111827",
   "theme_color": "#1f2937",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "icon-192.png",
@@ -18,6 +21,29 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Chat",
+      "short_name": "Chat",
+      "url": "./#chat",
+      "description": "Open AI chat interface",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Fine-Tuning",
+      "short_name": "Tune",
+      "url": "./#tuning",
+      "description": "Jump to fine-tuning workflow",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Gallery",
+      "short_name": "Art",
+      "url": "./#art",
+      "description": "Open art generation tools",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
     }
   ]
 }

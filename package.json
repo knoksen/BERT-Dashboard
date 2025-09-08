@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint . --ext .ts,.tsx",
-    "lint:fix": "eslint . --ext .ts,.tsx --fix"
+  "lint:fix": "eslint . --ext .ts,.tsx --fix",
+  "bundle:zip": "rm -f dist.zip 2>NUL || true && zip -r dist.zip dist"
   },
   "dependencies": {
     "@google/genai": "^1.11.0",

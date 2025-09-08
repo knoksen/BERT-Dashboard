@@ -1,6 +1,6 @@
 
 
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState, Suspense, lazy, useEffect } from 'react';
 import { AppMode } from './types';
 // Lazy-loaded feature modules for code splitting
 const DarkbertStudio = lazy(() => import('./components/DarkbertStudio'));
@@ -26,7 +26,7 @@ const LaunchBertLauncher = lazy(() => import('./components/LaunchBertLauncher'))
 const ArtisanBertStudio = lazy(() => import('./components/ArtisanBertStudio'));
 const NewsBertAnalyzer = lazy(() => import('./components/NewsBertAnalyzer'));
 import { CreditProvider, useCredits } from './contexts/CreditContext';
-import { ArrowLeftIcon, CoinsIcon, PlusIcon, ShareIcon } from './components/shared/IconComponents';
+import { ArrowLeftIcon, CoinsIcon, PlusIcon, ShareIcon, BrainCircuitIcon, PaintBrushIcon } from './components/shared/IconComponents';
 import InstallPWA from './components/shared/InstallPWA';
 import ShareModal from './components/shared/ShareModal';
 import usePersistentState from './hooks/usePersistentState';
@@ -136,12 +136,50 @@ const Header: React.FC<{ mode: AppMode, onBack: () => void, onShare: () => void 
 };
 
 
+// Hash <-> Mode mapping (supports multiple aliases for a single mode)
+const HASH_MODE_MAP: Record<string, AppMode> = {
+    '#chat': 'DARKBERT',
+    '#tuning': 'DARKBERT',
+    '#art': 'ARTISANBERT'
+};
+const MODE_PRIMARY_HASH: Partial<Record<AppMode, string>> = {
+    DARKBERT: '#chat',
+    ARTISANBERT: '#art'
+};
+
 const AppContent: React.FC = () => {
     const [mode, setMode] = usePersistentState<AppMode>('app_mode', 'TOOL_SUITE');
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
+    // Map hash fragments to modes for deep linking / PWA shortcuts
+    useEffect(() => {
+        const applyHash = () => {
+            const h = window.location.hash.toLowerCase();
+            const targetMode = HASH_MODE_MAP[h];
+            if (targetMode && targetMode !== mode) {
+                setMode(targetMode);
+            }
+        };
+        applyHash();
+        window.addEventListener('hashchange', applyHash);
+        return () => window.removeEventListener('hashchange', applyHash);
+    }, [mode, setMode]);
+
+    // Sync hash when mode changes: only set if current hash doesn't already represent the mode
+    useEffect(() => {
+        const currentHash = window.location.hash.toLowerCase();
+        const currentRepresentsMode = currentHash && HASH_MODE_MAP[currentHash] === mode;
+        const primary = MODE_PRIMARY_HASH[mode];
+        if (primary && !currentRepresentsMode) {
+            history.replaceState(null, '', primary);
+        } else if (!primary && currentHash && HASH_MODE_MAP[currentHash]) {
+            // Leaving a hashed mode -> clear hash
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    }, [mode]);
+
     const handleModeSelect = (selectedMode: AppMode) => {
-        setMode(selectedMode);
+        if (selectedMode !== mode) setMode(selectedMode);
     };
     
     const handleBack = () => {
@@ -206,6 +244,7 @@ const AppContent: React.FC = () => {
                     {renderMode()}
                 </Suspense>
             </main>
+            <QuickLaunchBar currentMode={mode} onSelect={handleModeSelect} />
             {isShareModalOpen && <ShareModal isOpen={isShareModalOpen} onClose={() => setIsShareModalOpen(false)} />}
         </div>
     );
@@ -221,3 +260,47 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+// Mobile quick launch bar (only visible on small screens) placed after export for file ordering clarity
+const QuickLaunchBar: React.FC<{ currentMode: AppMode; onSelect: (m: AppMode) => void; }> = ({ currentMode, onSelect }) => {
+    // Hide entirely on larger screens via Tailwind (sm:hidden already hides <640px? Actually sm: applies ≥640 so use md:hidden to show on mobile). We'll show on mobile only.
+    return (
+        <nav
+            aria-label="Quick launch"
+            className="fixed bottom-0 inset-x-0 md:hidden bg-dark-card/90 backdrop-blur border-t border-dark-border flex justify-around px-2 py-2 z-40"
+            data-testid="quick-launch-bar"
+        >
+            <QuickLaunchButton
+                label="Chat"
+                active={currentMode === 'DARKBERT'}
+                icon={<BrainCircuitIcon className="w-5 h-5" />}
+                onClick={() => { onSelect('DARKBERT'); window.location.hash = '#chat'; }}
+            />
+            <QuickLaunchButton
+                label="Tuning"
+                active={currentMode === 'DARKBERT'}
+                icon={<BrainCircuitIcon className="w-5 h-5" />}
+                onClick={() => { onSelect('DARKBERT'); window.location.hash = '#tuning'; }}
+            />
+            <QuickLaunchButton
+                label="Art"
+                active={currentMode === 'ARTISANBERT'}
+                icon={<PaintBrushIcon className="w-5 h-5" />}
+                onClick={() => { onSelect('ARTISANBERT'); window.location.hash = '#art'; }}
+            />
+        </nav>
+    );
+};
+
+const QuickLaunchButton: React.FC<{ label: string; icon: React.ReactNode; active: boolean; onClick: () => void; }> = ({ label, icon, active, onClick }) => (
+    <button
+        type="button"
+        onClick={onClick}
+        aria-label={label}
+        className={`flex flex-col items-center gap-0.5 px-4 py-1 rounded-lg text-xs font-medium transition-colors ${active ? 'text-accent' : 'text-dark-text-secondary hover:text-white'}`}
+        data-testid={`quick-launch-${label.toLowerCase()}`}
+    >
+        {icon}
+        <span>{label}</span>
+    </button>
+);
