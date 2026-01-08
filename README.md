@@ -26,6 +26,21 @@ Prerequisites: Node.js 18+
 4. Run dev server:
    npm run dev
 
+### Windows Install Helper
+
+For Windows, you can run the helper script to install dependencies, set the API key, build, and package the app:
+
+```powershell
+.\scripts\windows\install.ps1 -ApiKey "sk-..." 
+```
+
+Optional flags:
+
+* `-SkipInstall` to skip `npm install`
+* `-SkipBuild` to skip the production build
+
+The script outputs `dist.zip` using `Compress-Archive`.
+
 ## Build
 
 Production bundle (outputs to `dist/`):
@@ -152,4 +167,3 @@ Do NOT expose sensitive production keys directly to the client. For production, 
 ## License
 
 MIT (add a LICENSE file if distributing publicly).
-
