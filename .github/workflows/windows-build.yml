@@ -1,0 +1,106 @@
+name: Windows Build
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+      
+      - name: Run tests
+        run: npm test
+      
+      - name: Build web application
+        run: npm run build
+        env:
+          GEMINI_API_KEY: test-key
+      
+      - name: Test installation script
+        shell: powershell
+        run: |
+          .\scripts\windows\test-install.ps1 -Verbose
+      
+      - name: Create distribution package
+        shell: powershell
+        run: |
+          Compress-Archive -Path dist\* -DestinationPath dist.zip
+      
+      - name: Upload web build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build-node-${{ matrix.node-version }}
+          path: dist.zip
+          retention-days: 7
+  
+  build-electron:
+    runs-on: windows-latest
+    needs: build-windows
+    if: startsWith(github.ref, 'refs/tags/v') || github.event_name == 'workflow_dispatch'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+      
+      - name: Build Electron app
+        run: npm run electron:build:win
+        env:
+          GEMINI_API_KEY: test-key
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: List build outputs
+        shell: powershell
+        run: |
+          Get-ChildItem release -Recurse | Select-Object Name, Length, LastWriteTime
+      
+      - name: Upload Electron installers
+        uses: actions/upload-artifact@v4
+        with:
+          name: electron-installers-windows
+          path: |
+            release/*.exe
+            release/*.zip
+          retention-days: 30
+      
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            release/*.exe
+            release/*.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

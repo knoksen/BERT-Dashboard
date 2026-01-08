@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "electron/main.js",
+  "author": "knoksen",
+  "description": "Production-ready React + Vite PWA with multiple AI assistant workflows",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,7 +16,12 @@
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "bundle:zip": "rm -f dist.zip 2>NUL || true && zip -r dist.zip dist",
-    "install:win": "powershell -ExecutionPolicy Bypass -File scripts/windows/install.ps1"
+    "install:win": "powershell -ExecutionPolicy Bypass -File scripts/windows/install.ps1",
+    "electron:dev": "npm run build && electron .",
+    "electron:build": "npm run build && electron-builder",
+    "electron:build:win": "npm run build && electron-builder --win",
+    "electron:build:portable": "npm run build && electron-builder --win portable",
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "@google/genai": "^1.11.0",
@@ -30,7 +38,9 @@
     "@typescript-eslint/eslint-plugin": "^8.8.1",
     "@typescript-eslint/parser": "^8.8.1",
     "@vitejs/plugin-react": "^4.3.3",
-    "@vitest/coverage-v8": "^2.1.9",
+    "@vitest/coverage-v8": "^3.2.4",
+    "electron": "^35.7.5",
+    "electron-builder": "^25.1.8",
     "eslint": "^9.11.1",
     "eslint-config-prettier": "^9.1.0",
     "jsdom": "^25.0.1",

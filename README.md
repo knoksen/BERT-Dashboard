@@ -17,29 +17,123 @@ Icons: ![Icon 192](icon-192.png) ![Icon 512](icon-512.png)
 
 Prerequisites: Node.js 18+
 
+### Standard Installation
+
 1. Install deps:
+   ```bash
    npm install --legacy-peer-deps
+   ```
 2. Copy env template:
-   cp .env.example .env.local (Windows PowerShell: Copy-Item .env.example .env.local)
+   ```bash
+   cp .env.example .env.local
+   ```
+   (Windows PowerShell: `Copy-Item .env.example .env.local`)
 3. Add your key to `.env.local`:
+   ```
    GEMINI_API_KEY=sk-...
+   ```
 4. Run dev server:
+   ```bash
    npm run dev
+   ```
 
-### Windows Install Helper
+### Windows Installation (Automated)
 
-For Windows, you can run the helper script to install dependencies, set the API key, build, and package the app:
+#### Quick Start Script
+
+The easiest way to get started on Windows:
 
 ```powershell
-.\scripts\windows\install.ps1 -ApiKey "sk-..." 
+.\scripts\windows\start.ps1 -ApiKey "your-api-key-here"
 ```
 
-Optional flags:
+This script automatically:
+- Checks if dependencies are installed
+- Installs them if needed
+- Configures your API key
+- Starts the development server
 
-* `-SkipInstall` to skip `npm install`
-* `-SkipBuild` to skip the production build
+#### Full Installation Script
 
-The script outputs `dist.zip` using `Compress-Archive`.
+For a complete setup with build and packaging:
+
+```powershell
+.\scripts\windows\install.ps1 -ApiKey "your-api-key-here"
+```
+
+**Available Options:**
+- `-ApiKey` - Your Gemini API key (optional)
+- `-SkipInstall` - Skip npm install step
+- `-SkipBuild` - Skip the production build step
+- `-BuildElectron` - Build Electron desktop application with Windows installer
+- `-Verbose` - Enable detailed output
+
+**Examples:**
+```powershell
+# Basic install with API key
+.\scripts\windows\install.ps1 -ApiKey "sk-..."
+
+# Build desktop app with installer
+.\scripts\windows\install.ps1 -ApiKey "sk-..." -BuildElectron
+
+# Quick rebuild (skip install)
+.\scripts\windows\install.ps1 -SkipInstall
+
+# Verbose output for debugging
+.\scripts\windows\install.ps1 -Verbose
+```
+
+**Output:**
+- `dist/` - Web application build
+- `dist.zip` - Packaged web build
+- `release/` - Desktop application installers (if -BuildElectron used)
+
+#### Testing Your Installation
+
+Verify everything is configured correctly:
+
+```powershell
+.\scripts\windows\test-install.ps1
+```
+
+Add `-Verbose` flag for detailed information about each test.
+
+#### Cleanup
+
+To remove build artifacts:
+
+```powershell
+# Remove build outputs only
+.\scripts\windows\uninstall.ps1
+
+# Full cleanup (removes node_modules too)
+.\scripts\windows\uninstall.ps1 -Full
+
+# Keep environment file
+.\scripts\windows\uninstall.ps1 -KeepEnv
+```
+
+### Windows Desktop Application (Electron)
+
+Build a native Windows desktop application:
+
+```bash
+# Development mode (with live reload)
+npm run electron:dev
+
+# Build installer
+npm run electron:build:win
+
+# Build portable version
+npm run electron:build:portable
+```
+
+**Installer Types:**
+- **NSIS Installer** - Standard Windows installer with wizard
+- **Portable** - Standalone executable (no installation required)
+- **ZIP** - Compressed archive for manual extraction
+
+Desktop installers are created in the `release/` folder.
 
 ## Build
 
