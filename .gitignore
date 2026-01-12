@@ -26,3 +26,7 @@ dist-ssr
 # Coverage artifacts
 coverage/
 lcov.info
+
+
+#Ignore vscode AI rules
+.github\instructions\codacy.instructions.md

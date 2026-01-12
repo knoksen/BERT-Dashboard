@@ -1,0 +1,56 @@
+{
+  "appId": "com.knoksen.bert-dashboard",
+  "productName": "BERT Dashboard",
+  "copyright": "Copyright © 2026 ${author}",
+  "directories": {
+    "output": "release",
+    "buildResources": "build"
+  },
+  "files": [
+    "electron/**/*",
+    "dist/**/*",
+    "icon-192.png",
+    "icon-512.png",
+    "package.json"
+  ],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64", "arm64"]
+      },
+      {
+        "target": "portable",
+        "arch": ["x64"]
+      },
+      {
+        "target": "zip",
+        "arch": ["x64", "arm64"]
+      }
+    ],
+    "icon": "icon-512.png",
+    "artifactName": "${productName}-${version}-${arch}-${os}.${ext}",
+    "publisherName": "BERT Dashboard",
+    "verifyUpdateCodeSignature": false,
+    "requestedExecutionLevel": "asInvoker"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowElevation": true,
+    "allowToChangeInstallationDirectory": true,
+    "installerIcon": "icon-512.png",
+    "uninstallerIcon": "icon-512.png",
+    "installerHeaderIcon": "icon-512.png",
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "BERT Dashboard",
+    "license": "LICENSE",
+    "artifactName": "${productName}-Setup-${version}.${ext}",
+    "warningsAsErrors": false
+  },
+  "portable": {
+    "artifactName": "${productName}-${version}-Portable.${ext}"
+  },
+  "publish": null
+}
