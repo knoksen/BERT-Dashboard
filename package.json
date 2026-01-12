@@ -16,6 +16,7 @@
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "bundle:zip": "rm -f dist.zip 2>NUL || true && zip -r dist.zip dist",
+    "install:win": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/windows/install.ps1"
     "install:win": "powershell -ExecutionPolicy Bypass -File scripts/windows/install.ps1",
     "electron:dev": "npm run build && electron .",
     "electron:build": "npm run build && electron-builder",

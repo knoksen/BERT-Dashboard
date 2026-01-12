@@ -25,6 +25,28 @@
 
 ## 📑 Table of Contents
 
+### Windows Install Helper
+
+For Windows, you can run the helper script to install dependencies, set the API key, build, and package the app:
+
+```powershell
+.\scripts\windows\install.ps1 -ApiKey "sk-..."
+```
+
+Or via npm (pass args after `--`):
+
+```powershell
+npm run install:win -- -ApiKey "sk-..."
+```
+
+Optional flags:
+
+* `-SkipInstall` to skip `npm install`
+* `-SkipBuild` to skip the production build
+
+The script outputs `dist.zip` using `Compress-Archive`.
+
+## Build
 - [✨ Features](#-features)
 - [🚀 Quick Start](#-quick-start)
 - [💻 Installation](#installation)
@@ -748,6 +770,7 @@ Copyright © 2025 knoksen
 
 ⭐ **Star this repo if you find it helpful!** ⭐
 
+MIT (add a LICENSE file if distributing publicly).
 [🐛 Report Bug](https://github.com/knoksen/BERT-Dashboard/issues) • [✨ Request Feature](https://github.com/knoksen/BERT-Dashboard/issues) • [📖 Documentation](https://github.com/knoksen/BERT-Dashboard/wiki)
 
 </div>
