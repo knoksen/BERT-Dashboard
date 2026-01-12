@@ -11,8 +11,9 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint . --ext .ts,.tsx",
-  "lint:fix": "eslint . --ext .ts,.tsx --fix",
-  "bundle:zip": "rm -f dist.zip 2>NUL || true && zip -r dist.zip dist"
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "bundle:zip": "rm -f dist.zip 2>NUL || true && zip -r dist.zip dist",
+    "install:win": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/windows/install.ps1"
   },
   "dependencies": {
     "@google/genai": "^1.11.0",
