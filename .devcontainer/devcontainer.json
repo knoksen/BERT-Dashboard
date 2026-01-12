@@ -1,38 +1,51 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-	"name": "Node.js & TypeScript",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"name": "BERT Dashboard - React + TypeScript",
 	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
 	"features": {
-		"ghcr.io/devcontainers/features/git-lfs:1": {
-			"autoPull": true,
-			"installDirectlyFromGitHubRelease": true,
-			"version": "latest"
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "latest",
+			"ppa": true
 		},
 		"ghcr.io/devcontainers/features/github-cli:1": {
 			"installDirectlyFromGitHubRelease": true,
 			"version": "latest"
-		},
-		"ghcr.io/wxw-matt/devcontainer-features/command_runner:0": {},
-		"ghcr.io/nikiforovall/devcontainer-features/dotnet-csharpier:1": {},
-		"ghcr.io/dotnet/aspire-devcontainer-feature/dotnetaspire:1": {
-			"version": "latest daily"
 		}
-	}
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
-
-	// Configure tool-specific properties.
-	// "customizations": {},
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"ms-vscode.vscode-typescript-next",
+				"bradlc.vscode-tailwindcss",
+				"dsznajder.es7-react-js-snippets",
+				"vitest.explorer"
+			],
+			"settings": {
+				"editor.formatOnSave": true,
+				"editor.defaultFormatter": "esbenp.prettier-vscode",
+				"editor.codeActionsOnSave": {
+					"source.fixAll.eslint": "explicit"
+				},
+				"typescript.tsdk": "node_modules/typescript/lib",
+				"typescript.enablePromptUseWorkspaceTsdk": true
+			}
+		}
+	},
+	"forwardPorts": [3000, 5173],
+	"portsAttributes": {
+		"3000": {
+			"label": "Application",
+			"onAutoForward": "notify"
+		},
+		"5173": {
+			"label": "Vite Dev Server",
+			"onAutoForward": "notify"
+		}
+	},
+	"postCreateCommand": "npm install",
+	"postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+	"remoteUser": "node"
 }

@@ -6,6 +6,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { useChat } from '../hooks/useChat';
 
 // Minimal form wrapper to exercise the hook
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const HookHarness: React.FC<{ chatSession: any }> = ({ chatSession }) => {
   const { messages, input, setInput, handleSend, isThinking } = useChat(chatSession);
   return (

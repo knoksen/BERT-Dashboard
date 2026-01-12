@@ -1,10 +1,10 @@
 /// <reference types="vitest" />
-import React from 'react';
 import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 
 // Deferred mock reference to avoid TDZ inside factory
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let prepareDataMock: any;
 vi.mock('../services/geminiService', () => ({
   prepareDataForFinetuning: (...args: any[]) => prepareDataMock(...args),
@@ -13,12 +13,12 @@ vi.mock('../services/geminiService', () => ({
 // Mock ProcessingView to bypass timer-driven progress
 vi.mock('../components/shared/ProcessingView', () => ({
   __esModule: true,
-  default: (props: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default: function MockProcessingView(props: any) {
     const React = require('react');
     const { useState } = React;
     const [started, setStarted] = useState(false);
     const [complete, setComplete] = useState(false);
-    const Icon = props.icon || (() => null);
     return (
       <div>
         <h2>{props.title}</h2>
@@ -37,6 +37,7 @@ vi.mock('../components/shared/ProcessingView', () => ({
 import DarkbertStudio from '../components/DarkbertStudio';
 
 // We'll mock the credits context similarly to earlier tests.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let mockCredits: any;
 vi.mock('../contexts/CreditContext', () => ({
   useCredits: () => mockCredits,

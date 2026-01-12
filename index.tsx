@@ -6,7 +6,7 @@ import App from './App';
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
+      .then(_registration => {
         // Registration was successful
       })
       .catch(error => {

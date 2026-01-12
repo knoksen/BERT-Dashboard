@@ -1,5 +1,5 @@
-const CACHE_NAME = 'ai-tool-suite-static-v1';
-const DYNAMIC_CACHE_NAME = 'ai-tool-suite-dynamic-v1';
+const CACHE_NAME = 'ai-tool-suite-static-v2';
+const DYNAMIC_CACHE_NAME = 'ai-tool-suite-dynamic-v2';
 
 // App shell files to cache on install
 const URLS_TO_CACHE = [
@@ -16,26 +16,50 @@ const URLS_TO_CACHE = [
 
 // Install event: cache the app shell
 self.addEventListener('install', event => {
+  console.log('[ServiceWorker] Installing new version...');
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('Opened static cache');
+      console.log('[ServiceWorker] Opened static cache');
       return cache.addAll(URLS_TO_CACHE);
+    }).then(() => {
+      // Skip waiting to activate immediately
+      return self.skipWaiting();
     })
   );
 });
 
-// Activate event: clean up old caches
+// Activate event: clean up old caches and take control
 self.addEventListener('activate', event => {
+  console.log('[ServiceWorker] Activating new version...');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames
-          .filter(cacheName => cacheName.startsWith('ai-tool-suite-') && cacheName !== CACHE_NAME && cacheName !== DYNAMIC_CACHE_NAME)
-          .map(cacheName => caches.delete(cacheName))
+          .filter(cacheName =>
+            cacheName.startsWith('ai-tool-suite-') &&
+            cacheName !== CACHE_NAME &&
+            cacheName !== DYNAMIC_CACHE_NAME
+          )
+          .map(cacheName => {
+            console.log('[ServiceWorker] Deleting old cache:', cacheName);
+            return caches.delete(cacheName);
+          })
       );
+    }).then(() => {
+      console.log('[ServiceWorker] New version activated');
+      // Notify all clients about the update
+      return self.clients.matchAll().then(clients => {
+        clients.forEach(client => {
+          client.postMessage({
+            type: 'SW_UPDATED',
+            version: CACHE_NAME
+          });
+        });
+      });
+    }).then(() => {
+      return self.clients.claim();
     })
   );
-  return self.clients.claim();
 });
 
 // Fetch event: serve from cache, fall back to network
@@ -70,4 +94,11 @@ self.addEventListener('fetch', event => {
       });
     })
   );
+});
+
+// Listen for skip waiting message from client
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });

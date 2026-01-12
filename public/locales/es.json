@@ -1,0 +1,61 @@
+{
+  "common": {
+    "appName": "Panel BERT",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "warning": "Advertencia",
+    "info": "Información",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "clear": "Limpiar",
+    "reset": "Restablecer",
+    "refresh": "Actualizar",
+    "settings": "Configuración",
+    "help": "Ayuda",
+    "logout": "Cerrar sesión",
+    "login": "Iniciar sesión"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "dashboard": "Panel",
+    "profile": "Perfil",
+    "about": "Acerca de",
+    "contact": "Contacto"
+  },
+  "errors": {
+    "generic": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+    "network": "Error de red. Por favor, verifica tu conexión.",
+    "notFound": "Recurso no encontrado.",
+    "unauthorized": "No estás autorizado para acceder a este recurso.",
+    "forbidden": "El acceso a este recurso está prohibido.",
+    "serverError": "Error del servidor. Por favor, inténtalo más tarde.",
+    "validation": "Por favor, verifica tu entrada e inténtalo de nuevo."
+  },
+  "analytics": {
+    "title": "Privacidad y Análisis",
+    "description": "Usamos análisis para mejorar tu experiencia. Tus datos son anónimos y respetamos No Rastrear. Puedes cambiar esto en cualquier momento en la configuración.",
+    "accept": "Aceptar",
+    "decline": "Rechazar"
+  },
+  "theme": {
+    "light": "Claro",
+    "dark": "Oscuro",
+    "auto": "Automático",
+    "custom": "Personalizado"
+  },
+  "language": {
+    "select": "Seleccionar Idioma",
+    "current": "Idioma Actual"
+  }
+}

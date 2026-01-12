@@ -8,8 +8,6 @@ interface ShareModalProps {
 }
 
 const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
   const url = window.location.href;
   const [copied, setCopied] = useState(false);
 
@@ -18,6 +16,8 @@ const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose }) => {
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  if (!isOpen) return null;
 
   return (
     <div

@@ -2,6 +2,7 @@
 
 import React, { useState, Suspense, lazy, useEffect } from 'react';
 import { AppMode } from './types';
+import ErrorBoundary from './components/shared/ErrorBoundary';
 // Lazy-loaded feature modules for code splitting
 const DarkbertStudio = lazy(() => import('./components/DarkbertStudio'));
 const ArtistScamDetectorView = lazy(() => import('./components/ArtistScamDetectorView'));
@@ -253,9 +254,11 @@ const AppContent: React.FC = () => {
 
 const App: React.FC = () => {
     return (
-        <CreditProvider>
-            <AppContent />
-        </CreditProvider>
+        <ErrorBoundary>
+            <CreditProvider>
+                <AppContent />
+            </CreditProvider>
+        </ErrorBoundary>
     );
 };
 

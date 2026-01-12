@@ -2,7 +2,7 @@
 import React from 'react';
 import { Chat } from '@google/genai';
 import { useChat } from '../../hooks/useChat';
-import { ChatBubbleIcon, SendIcon } from './IconComponents';
+import { SendIcon } from './IconComponents';
 import LoadingSpinner from './LoadingSpinner';
 
 interface ChatInterfaceProps {

@@ -18,7 +18,7 @@ const ArtConceptView: React.FC<ArtConceptViewProps> = ({ onConceptGenerated }) =
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [concept, setConcept] = useState<ArtConcept | null>(null);
-  const { credits, spendCredits, showPaywall } = useCredits();
+  const { credits, showPaywall } = useCredits();
   const cost = TOOL_COSTS['ARTISANBERT'] ?? 0;
 
   const handleGenerate = async () => {

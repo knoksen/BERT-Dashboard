@@ -21,7 +21,23 @@
       ]
     },
     "allowImportingTsExtensions": true,
-  "noEmit": true,
-  "types": ["vitest", "@testing-library/jest-dom"]
-  }
+    "noEmit": true,
+    "types": ["vitest", "@testing-library/jest-dom"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build"
+  ]
 }
